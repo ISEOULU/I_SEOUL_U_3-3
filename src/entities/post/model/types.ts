@@ -10,3 +10,9 @@ export interface Post {
     tags?: string[]
     views?: number
   }
+
+export interface CreatePostPayload {
+  title: string
+  body: string
+  userId: number
+}
