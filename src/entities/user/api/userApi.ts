@@ -1,0 +1,1 @@
+export const fetchUsersApi = () => fetch("/api/users?limit=0&select=username,image").then(res => res.json());
