@@ -1,11 +1,23 @@
 import { BrowserRouter as Router } from "react-router-dom"
-import Header from "./components/Header.tsx"
-import Footer from "./components/Footer.tsx"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { Header } from "./widgets/header/ui/Header.tsx"
+import { Footer } from "./widgets/footer/ui/Footer.tsx"
 import PostsManagerPage from "./pages/PostsManagerPage.tsx"
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+    },
+  },
+})
 
 const App = () => {
   return (
-    <Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow container mx-auto px-4 py-8">
@@ -14,6 +26,8 @@ const App = () => {
         <Footer />
       </div>
     </Router>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>
   )
 }
 
