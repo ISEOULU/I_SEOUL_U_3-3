@@ -2,6 +2,7 @@ import { useState } from "react"
 import { fetchPostsApi } from "../../../entities/post/api/postApi"
 import { fetchUsersApi } from "../../../entities/user/api/userApi"
 import { Post } from "../../../entities/post/model/types"
+import { User } from "../../../entities/user/model/types"
 
 export const usePostList = () => {
   const [posts, setPosts] = useState<Post[]>([])
@@ -16,7 +17,7 @@ export const usePostList = () => {
 
       const postsWithUsers = postsData.posts.map((post: Post) => ({
         ...post,
-        author: usersData.users.find((user: any) => user.id === post.userId),
+        author: usersData.users.find((user: User) => user.id === post.userId),
       }))
 
       setPosts(postsWithUsers)
