@@ -18,3 +18,9 @@ export const updatePostApi = (post: Post) => {
     body: JSON.stringify(post),
   }).then((response) => response.json())
 }
+
+export const deletePostApi = (id: number) => {
+  return fetch(`/api/posts/${id}`, {
+    method: "DELETE",
+  })
+}

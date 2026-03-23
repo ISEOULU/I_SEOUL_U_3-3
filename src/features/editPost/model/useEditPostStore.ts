@@ -23,14 +23,11 @@ export const useEditPostStore = create<EditPostState>((set, get) => ({
     if (!selectedPost) return
     set({ loading: true })
     try {
-      // 1. 순수 API(Entity) 호출
       const data = await updatePostApi(selectedPost)
       
-      // 2. 전체 게시물(Entity Store) 원본 갱신
       const { posts, setPosts } = usePostStore.getState()
       setPosts(posts.map((post) => (post.id === data.id ? data : post)))
 
-      // 3. UI 상태(Feature) 초기화
       set({ showEditDialog: false, selectedPost: null })
     } catch (error) {
       console.error("게시물 수정 오류:", error)

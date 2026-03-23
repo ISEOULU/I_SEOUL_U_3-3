@@ -7,6 +7,7 @@ import { useTagStore } from "../entities/tag/model/useTagStore"
 import { AddPostDialog } from "../features/addPost/ui/AddPostDialog"
 import { useEditPostStore } from "../features/editPost/model/useEditPostStore"
 import { EditPostDialog } from "../features/editPost/ui/EditPostDialog"
+import { useDeletePost } from "../features/deletePost/model/useDeletePost"
 import {
   Button,
   Card,
@@ -44,6 +45,7 @@ const PostsManager = () => {
   const [limit, setLimit] = useState(parseInt(queryParams.get("limit") || "10"))
   const [searchQuery, setSearchQuery] = useState(queryParams.get("search") || "")
   const { selectedPost, setSelectedPost, setShowEditDialog } = useEditPostStore()
+  const { deletePost } = useDeletePost()
   const [sortBy, setSortBy] = useState(queryParams.get("sortBy") || "")
   const [sortOrder, setSortOrder] = useState(queryParams.get("sortOrder") || "asc")
   const { tags, fetchTags } = useTagStore()
@@ -120,17 +122,7 @@ const PostsManager = () => {
     setLoading(false)
   }
 
-  // 게시물 삭제
-  const deletePost = async (id) => {
-    try {
-      await fetch(`/api/posts/${id}`, {
-        method: "DELETE",
-      })
-      setPosts(posts.filter((post) => post.id !== id))
-    } catch (error) {
-      console.error("게시물 삭제 오류:", error)
-    }
-  }
+
 
   // 댓글 가져오기
   const fetchComments = async (postId) => {
